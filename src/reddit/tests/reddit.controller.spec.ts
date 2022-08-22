@@ -8,19 +8,24 @@ import { RedditService } from '../reddit.service';
 describe('RedditController', () => {
   let instance: INestApplication;
   let redditController: RedditController;
-  const fetchAllSpy = jest.spyOn(RedditService.prototype, 'fetchAllSubredditPosts');
+  const fetchAllSpy = jest.spyOn(
+    RedditService.prototype,
+    'fetchAllSubredditPosts',
+  );
   const fetchSpy = jest.spyOn(RedditService.prototype, 'fetchSubredditPosts');
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RedditController],
-      providers: [{
-        provide: RedditService,
-        useValue: {
-          fetchAllSubredditPosts: fetchAllSpy.mockImplementation(jest.fn()),
-          fetchSubredditPosts: fetchSpy.mockImplementation(jest.fn()),
+      providers: [
+        {
+          provide: RedditService,
+          useValue: {
+            fetchAllSubredditPosts: fetchAllSpy.mockImplementation(jest.fn()),
+            fetchSubredditPosts: fetchSpy.mockImplementation(jest.fn()),
+          },
         },
-      }],
+      ],
     }).compile();
 
     redditController = module.get<RedditController>(RedditController);
@@ -32,7 +37,7 @@ describe('RedditController', () => {
     // reset spies
     fetchAllSpy.mockReset();
     fetchSpy.mockReset();
-  })
+  });
 
   it('should be defined', () => {
     expect(redditController).toBeDefined();
@@ -48,12 +53,12 @@ describe('RedditController', () => {
 
   it('should return an array of reddit posts with a limit', async () => {
     const timeframe = Timeframe.Today;
-    const limit = 3
+    const limit = 3;
     const result = await request(instance.getHttpServer()).get(
       '/reddit?limit=' + limit,
     );
     expect(result.status).toBe(200);
-    
+
     expect(fetchAllSpy).toHaveBeenCalledTimes(1);
     expect(fetchAllSpy).toHaveBeenCalledWith(timeframe, limit);
   });
@@ -92,7 +97,12 @@ describe('RedditController', () => {
     const limit = 3;
 
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?subreddit=' + subreddit + '&timeframe=' + timeframe + '&limit=' + limit,
+      '/reddit?subreddit=' +
+        subreddit +
+        '&timeframe=' +
+        timeframe +
+        '&limit=' +
+        limit,
     );
     expect(result.status).toBe(200);
 
@@ -106,7 +116,12 @@ describe('RedditController', () => {
     const limit = 3;
 
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?subreddit=' + subreddit + '&timeframe=' + timeframe + '&limit=' + limit,
+      '/reddit?subreddit=' +
+        subreddit +
+        '&timeframe=' +
+        timeframe +
+        '&limit=' +
+        limit,
     );
     expect(result.status).toBe(200);
 
