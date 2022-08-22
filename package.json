@@ -1,8 +1,8 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "programmer-humor",
   "private": true,
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "This API fetches funny posts from various sites around the web and makes them available for you to integrate on your blog, or whatever else you want to do with them.",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
