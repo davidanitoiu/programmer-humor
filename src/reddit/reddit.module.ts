@@ -4,6 +4,6 @@ import { RedditController } from './reddit.controller';
 
 @Module({
   controllers: [RedditController],
-  providers: [RedditService]
+  providers: [RedditService],
 })
 export class RedditModule {}

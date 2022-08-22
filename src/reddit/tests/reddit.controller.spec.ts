@@ -27,47 +27,61 @@ describe('RedditController', () => {
     const result = await request(instance.getHttpServer()).get('/reddit');
     expect(result.status).toBe(200);
     expect(result.body).toBeInstanceOf(Array);
-  })
+  });
 
   it('should return an array of reddit posts with a limit', async () => {
-    const result = await request(instance.getHttpServer()).get('/reddit?limit=5');
+    const result = await request(instance.getHttpServer()).get(
+      '/reddit?limit=5',
+    );
     expect(result.status).toBe(200);
     expect(result.body.length).toBe(5);
   });
 
   it('should return an array of reddit posts with a subreddit', async () => {
-    const result = await request(instance.getHttpServer()).get('/reddit?subreddit=programmerhumor');
+    const result = await request(instance.getHttpServer()).get(
+      '/reddit?subreddit=programmerhumor',
+    );
 
     expect(result.status).toBe(200);
     expect(result.body.length).toBe(5);
   });
 
   it('should return an array of reddit posts with a subreddit and a limit', async () => {
-    const result = await request(instance.getHttpServer()).get('/reddit?subreddit=programmerhumor&limit=5');
+    const result = await request(instance.getHttpServer()).get(
+      '/reddit?subreddit=programmerhumor&limit=5',
+    );
     expect(result.status).toBe(200);
     expect(result.body.length).toBe(5);
-  })
-  
+  });
+
   it('should return an array of reddit posts with a subreddit and a timeframe', async () => {
-    const result = await request(instance.getHttpServer()).get('/reddit?subreddit=programmerhumor&timeframe=today');
+    const result = await request(instance.getHttpServer()).get(
+      '/reddit?subreddit=programmerhumor&timeframe=today',
+    );
     expect(result.status).toBe(200);
-  })
+  });
 
   it('should return an array of reddit posts with a subreddit, a timeframe and a limit', async () => {
-    const result = await request(instance.getHttpServer()).get('/reddit?subreddit=programmerhumor&timeframe=today&limit=5');
+    const result = await request(instance.getHttpServer()).get(
+      '/reddit?subreddit=programmerhumor&timeframe=today&limit=5',
+    );
     expect(result.status).toBe(200);
     expect(result.body.length).toBe(5);
-  })
+  });
 
   it('should return an array of reddit posts with a timeframe', async () => {
-    const result = await request(instance.getHttpServer()).get('/reddit?timeframe=today');
-    expect(result.status).toBe(200);
-  })
-
-  it('should return an array of reddit posts with a timeframe and a limit', async () => {
-    const result = await request(instance.getHttpServer()).get('/reddit?timeframe=today&limit=5');
+    const result = await request(instance.getHttpServer()).get(
+      '/reddit?timeframe=today',
+    );
     expect(result.status).toBe(200);
     expect(result.body.length).toBe(5);
-  })
+  });
 
+  it('should return an array of reddit posts with a timeframe and a limit', async () => {
+    const result = await request(instance.getHttpServer()).get(
+      '/reddit?timeframe=today&limit=5',
+    );
+    expect(result.status).toBe(200);
+    expect(result.body.length).toBe(5);
+  });
 });

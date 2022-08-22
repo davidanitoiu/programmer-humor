@@ -12,9 +12,9 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
-  })
+  });
 
   it('is defined', () => {
     expect(app).toBeDefined();
   });
-})
+});

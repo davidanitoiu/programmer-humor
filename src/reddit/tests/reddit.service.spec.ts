@@ -12,7 +12,7 @@ export const templateGenerator = (subreddit) => ({
   permalink: 'https://reddit.com',
   source: '/r/' + subreddit,
   posted: new Date(1661094988),
-})
+});
 
 export const MockRedditService = {
   provide: RedditService,
@@ -21,12 +21,14 @@ export const MockRedditService = {
       // return an array of templates matching the length of the limit
       return Array(limit).fill(templateGenerator(Subreddit.ProgrammerHumor));
     }),
-    fetchSubredditPosts: jest.fn((subreddit: Subreddit, timeframe: Timeframe, limit: number) => {
-      // return an array of templates matching the length of the limit
-      return Array(limit).fill(templateGenerator(subreddit));
-    }),
-  }
-}
+    fetchSubredditPosts: jest.fn(
+      (subreddit: Subreddit, timeframe: Timeframe, limit: number) => {
+        // return an array of templates matching the length of the limit
+        return Array(limit).fill(templateGenerator(subreddit));
+      },
+    ),
+  },
+};
 
 describe('RedditService', () => {
   let service: RedditService;
@@ -41,7 +43,7 @@ describe('RedditService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-  })
+  });
 
   it('should return an array of reddit posts', async () => {
     const serviceSpy = jest.spyOn(service, 'fetchAllSubredditPosts');
@@ -52,7 +54,7 @@ describe('RedditService', () => {
     await service.fetchAllSubredditPosts(timeframe, limit);
 
     expect(serviceSpy).toHaveBeenCalledWith(timeframe, limit);
-  })
+  });
 
   it('should return an array of reddit posts with a subreddit', async () => {
     const serviceSpy = jest.spyOn(service, 'fetchSubredditPosts');
@@ -64,7 +66,5 @@ describe('RedditService', () => {
     await service.fetchSubredditPosts(subreddit, timeframe, limit);
 
     expect(serviceSpy).toHaveBeenCalledWith(subreddit, timeframe, limit);
-  })
-
-
+  });
 });
