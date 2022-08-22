@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Subreddit, Timeframe } from '../reddit.dto';
+import { RedditPostDto, Subreddit, Timeframe } from '../reddit.dto';
 import { RedditService } from '../reddit.service';
 
 export const templateGenerator = (subreddit) => ({
@@ -14,28 +14,20 @@ export const templateGenerator = (subreddit) => ({
   posted: new Date(1661094988),
 });
 
-export const MockRedditService = {
-  provide: RedditService,
-  useValue: {
-    fetchAllSubredditPosts: jest.fn((timeframe: Timeframe, limit: number) => {
-      // return an array of templates matching the length of the limit
-      return Array(limit).fill(templateGenerator(Subreddit.ProgrammerHumor));
-    }),
-    fetchSubredditPosts: jest.fn(
-      (subreddit: Subreddit, timeframe: Timeframe, limit: number) => {
-        // return an array of templates matching the length of the limit
-        return Array(limit).fill(templateGenerator(subreddit));
-      },
-    ),
-  },
-};
-
 describe('RedditService', () => {
   let service: RedditService;
+  const fetchAllSpy = jest.spyOn(RedditService.prototype, 'fetchAllSubredditPosts');
+  const fetchSpy = jest.spyOn(RedditService.prototype, 'fetchSubredditPosts');
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [MockRedditService],
+      providers: [{
+        provide: RedditService,
+        useValue: {
+          fetchAllSubredditPosts: fetchAllSpy.mockImplementation(jest.fn()),
+          fetchSubredditPosts: fetchSpy.mockImplementation(jest.fn()),
+        },
+      }],
     }).compile();
 
     service = module.get<RedditService>(RedditService);
