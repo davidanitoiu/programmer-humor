@@ -6,7 +6,6 @@ export async function fetchPosts(subreddit: Subreddit, timeframe: Timeframe, lim
     const response = await axios.get(url);
     const { data } = response.data;
     return data.children
-        .filter((child) => child.data.score > 2000)
         .map((child) => ({
             url: 'https://reddit.com' + child.data.permalink,
             sourceUrl: 'https://reddit.com/r/' + child.data.subreddit,
