@@ -16,5 +16,7 @@ export async function fetchPosts(subreddit: Subreddit, timeframe: Timeframe, lim
             permalink: child.data.permalink,
             source: '/r/' + child.data.subreddit,
             posted: new Date(child.data.created_utc * 1000),
-        }));
+        }))
+        .sort((a, b) => b.upvotes - a.upvotes);
+        ;
 }
