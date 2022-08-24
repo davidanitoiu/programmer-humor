@@ -12,6 +12,8 @@ export function fetchPostsFromAllSubreddits(
     return Promise.all(promises).then((posts) =>
         posts.reduce((acc, curr) => {
             return acc.concat(curr);
-        }).slice(0, limit)
+        })
+        .sort((a, b) => b.upvotes - a.upvotes)
+        .slice(0, limit)
     );
 }
