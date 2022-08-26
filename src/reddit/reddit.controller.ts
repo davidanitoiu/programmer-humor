@@ -10,7 +10,7 @@ import { RedditPostDto, Subreddit, Timeframe } from './reddit.dto';
 import { RedditService } from './reddit.service';
 import { ApiQuery } from '@nestjs/swagger';
 
-@Controller('reddit')
+@Controller('api/reddit')
 export class RedditController {
   constructor(private redditService: RedditService) {}
 

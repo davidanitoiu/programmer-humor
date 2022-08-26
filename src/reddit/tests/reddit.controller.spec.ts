@@ -44,7 +44,7 @@ describe('RedditController', () => {
   });
 
   it('should return an array of reddit posts', async () => {
-    const result = await request(instance.getHttpServer()).get('/reddit');
+    const result = await request(instance.getHttpServer()).get('/api/reddit');
     expect(result.status).toBe(200);
 
     expect(fetchAllSpy).toHaveBeenCalledTimes(1);
@@ -55,7 +55,7 @@ describe('RedditController', () => {
     const timeframe = Timeframe.Today;
     const limit = 3;
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?limit=' + limit,
+      '/api/reddit?limit=' + limit,
     );
     expect(result.status).toBe(200);
 
@@ -69,7 +69,7 @@ describe('RedditController', () => {
     const limit = 3;
 
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?subreddit=' + subreddit + '&limit=' + limit,
+      '/api/reddit?subreddit=' + subreddit + '&limit=' + limit,
     );
     expect(result.status).toBe(200);
 
@@ -83,7 +83,7 @@ describe('RedditController', () => {
     const limit = 3;
 
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?subreddit=' + subreddit + '&limit=' + limit,
+      '/api/reddit?subreddit=' + subreddit + '&limit=' + limit,
     );
     expect(result.status).toBe(200);
 
@@ -97,7 +97,7 @@ describe('RedditController', () => {
     const limit = 3;
 
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?subreddit=' +
+      '/api/reddit?subreddit=' +
         subreddit +
         '&timeframe=' +
         timeframe +
@@ -116,7 +116,7 @@ describe('RedditController', () => {
     const limit = 3;
 
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?subreddit=' +
+      '/api/reddit?subreddit=' +
         subreddit +
         '&timeframe=' +
         timeframe +
@@ -134,7 +134,7 @@ describe('RedditController', () => {
     const limit = 3;
 
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?timeframe=' + timeframe + '&limit=' + limit,
+      '/api/reddit?timeframe=' + timeframe + '&limit=' + limit,
     );
     expect(result.status).toBe(200);
 
@@ -147,7 +147,7 @@ describe('RedditController', () => {
     const limit = 3;
 
     const result = await request(instance.getHttpServer()).get(
-      '/reddit?timeframe=' + timeframe + '&limit=' + limit,
+      '/api/reddit?timeframe=' + timeframe + '&limit=' + limit,
     );
     expect(result.status).toBe(200);
 
