@@ -1,4 +1,4 @@
-import { fetchPosts, fetchPostsFromAllSubreddits } from '@/utils/reddit/helpers';
+import { fetchPosts, fetchPostsFromAllSubreddits } from '../utils/reddit/helpers';
 import { Injectable } from '@nestjs/common';
 import { RedditPostDto, Subreddit, Timeframe } from './reddit.dto';
 

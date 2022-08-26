@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Subreddit, Timeframe } from '../reddit.dto';
 import { RedditService } from '../reddit.service';
-import * as helpers from '@/utils/reddit/helpers';
+import * as helpers from '../../utils/reddit/helpers';
 
 export const templateGenerator = (subreddit) => ({
   url: 'https://reddit.com',
