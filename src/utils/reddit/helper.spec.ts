@@ -1,4 +1,4 @@
-import { Subreddit, Timeframe } from "@/reddit/reddit.dto";
+import { Subreddit, Timeframe } from "../../reddit/reddit.dto";
 import axios from "axios";
 import * as helpers from "./helpers";
 import { fetchPostsFromAllSubreddits } from "./fetchPostsFromAllSubreddits";

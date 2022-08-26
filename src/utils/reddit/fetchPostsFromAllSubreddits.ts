@@ -1,4 +1,4 @@
-import { Timeframe, RedditPostDto, Subreddit } from "@/reddit/reddit.dto";
+import { Timeframe, RedditPostDto, Subreddit } from "../../reddit/reddit.dto";
 import { getListOfSubreddits, fetchPosts } from "./helpers";
 
 export function fetchPostsFromAllSubreddits(

@@ -1,4 +1,4 @@
-import { Subreddit } from "@/reddit/reddit.dto";
+import { Subreddit } from "../../reddit/reddit.dto";
 
 export function getListOfSubreddits(): Subreddit[] {
     const keys = Object.keys(Subreddit);

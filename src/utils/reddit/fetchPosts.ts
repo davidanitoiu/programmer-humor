@@ -1,4 +1,4 @@
-import { Subreddit, Timeframe, RedditPostDto } from "@/reddit/reddit.dto";
+import { Subreddit, Timeframe, RedditPostDto } from "../../reddit/reddit.dto";
 import axios from "axios";
 
 export async function fetchPosts(subreddit: Subreddit, timeframe: Timeframe, limit: number): Promise<RedditPostDto[]> {
