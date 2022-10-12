@@ -6,13 +6,13 @@ import {
   ParseIntPipe,
   Query,
 } from '@nestjs/common';
-import { RedditPostDto, Subreddit, Timeframe } from './reddit.dto';
+import { RedditPostDto, Sorting, Subreddit, Timeframe } from './reddit.dto';
 import { RedditService } from './reddit.service';
 import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('api/reddit')
 export class RedditController {
-  constructor(private redditService: RedditService) {}
+  constructor(private redditService: RedditService) { }
 
   @ApiQuery({
     name: 'subreddit',
@@ -53,9 +53,16 @@ export class RedditController {
     )
     timeframe: Timeframe,
     @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit: number,
+    @Query(
+      'sorting',
+      new DefaultValuePipe(Sorting.Hot),
+      new ParseEnumPipe(Sorting),
+    ) sorting: Sorting,
+    // after is an optional parameter that is used to fetch the next page of posts
+    @Query('after') after?: string,
   ): Promise<RedditPostDto[]> {
     return subreddit === Subreddit.All
-      ? this.redditService.fetchAllSubredditPosts(timeframe, limit)
-      : this.redditService.fetchSubredditPosts(subreddit, timeframe, limit);
+      ? this.redditService.fetchAllSubredditPosts({ timeframe, limit, sorting, after })
+      : this.redditService.fetchSubredditPosts({ subreddit, timeframe, limit, sorting, after });
   }
 }

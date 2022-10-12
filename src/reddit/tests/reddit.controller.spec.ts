@@ -48,7 +48,7 @@ describe('RedditController', () => {
     expect(result.status).toBe(200);
 
     expect(fetchAllSpy).toHaveBeenCalledTimes(1);
-    expect(fetchAllSpy).toHaveBeenCalledWith(Timeframe.Today, 5);
+    expect(fetchAllSpy).toHaveBeenCalledWith({ "after": undefined, "limit": 5, "sorting": "hot", "timeframe": "today" });
   });
 
   it('should return an array of reddit posts with a limit', async () => {
@@ -60,7 +60,7 @@ describe('RedditController', () => {
     expect(result.status).toBe(200);
 
     expect(fetchAllSpy).toHaveBeenCalledTimes(1);
-    expect(fetchAllSpy).toHaveBeenCalledWith(timeframe, limit);
+    expect(fetchAllSpy).toHaveBeenCalledWith({ "after": undefined, "limit": limit, "sorting": "hot", "timeframe": timeframe });
   });
 
   it('should return an array of reddit posts with a subreddit', async () => {
@@ -74,7 +74,7 @@ describe('RedditController', () => {
     expect(result.status).toBe(200);
 
     expect(fetchSpy).toHaveBeenCalledTimes(1);
-    expect(fetchSpy).toHaveBeenCalledWith(subreddit, timeframe, limit);
+    expect(fetchSpy).toHaveBeenCalledWith({ "after": undefined, "limit": limit, "sorting": "hot", "subreddit": subreddit, "timeframe": timeframe });
   });
 
   it('should return an array of reddit posts with a subreddit and a limit', async () => {
@@ -88,7 +88,7 @@ describe('RedditController', () => {
     expect(result.status).toBe(200);
 
     expect(fetchSpy).toHaveBeenCalledTimes(1);
-    expect(fetchSpy).toHaveBeenCalledWith(subreddit, timeframe, limit);
+    expect(fetchSpy).toHaveBeenCalledWith({"after": undefined, "limit": limit, "sorting": "hot", "subreddit": subreddit, "timeframe": timeframe});
   });
 
   it('should return an array of reddit posts with a subreddit and a timeframe', async () => {
@@ -98,16 +98,16 @@ describe('RedditController', () => {
 
     const result = await request(instance.getHttpServer()).get(
       '/api/reddit?subreddit=' +
-        subreddit +
-        '&timeframe=' +
-        timeframe +
-        '&limit=' +
-        limit,
+      subreddit +
+      '&timeframe=' +
+      timeframe +
+      '&limit=' +
+      limit,
     );
     expect(result.status).toBe(200);
 
     expect(fetchSpy).toHaveBeenCalledTimes(1);
-    expect(fetchSpy).toHaveBeenCalledWith(subreddit, timeframe, limit);
+    expect(fetchSpy).toHaveBeenCalledWith({"after": undefined, "limit": limit, "sorting": "hot", "subreddit": subreddit, "timeframe": timeframe});
   });
 
   it('should return an array of reddit posts with a subreddit, a timeframe and a limit', async () => {
@@ -117,16 +117,16 @@ describe('RedditController', () => {
 
     const result = await request(instance.getHttpServer()).get(
       '/api/reddit?subreddit=' +
-        subreddit +
-        '&timeframe=' +
-        timeframe +
-        '&limit=' +
-        limit,
+      subreddit +
+      '&timeframe=' +
+      timeframe +
+      '&limit=' +
+      limit,
     );
     expect(result.status).toBe(200);
 
     expect(fetchSpy).toHaveBeenCalledTimes(1);
-    expect(fetchSpy).toHaveBeenCalledWith(subreddit, timeframe, limit);
+    expect(fetchSpy).toHaveBeenCalledWith({"after": undefined, "limit": limit, "sorting": "hot", "subreddit": subreddit, "timeframe": timeframe});
   });
 
   it('should return an array of reddit posts with a timeframe', async () => {
@@ -139,7 +139,7 @@ describe('RedditController', () => {
     expect(result.status).toBe(200);
 
     expect(fetchAllSpy).toHaveBeenCalledTimes(1);
-    expect(fetchAllSpy).toHaveBeenCalledWith(timeframe, limit);
+    expect(fetchAllSpy).toHaveBeenCalledWith({"after": undefined, "limit": limit, "sorting": "hot", "timeframe": timeframe});
   });
 
   it('should return an array of reddit posts with a timeframe and a limit', async () => {
@@ -152,6 +152,6 @@ describe('RedditController', () => {
     expect(result.status).toBe(200);
 
     expect(fetchAllSpy).toHaveBeenCalledTimes(1);
-    expect(fetchAllSpy).toHaveBeenCalledWith(timeframe, limit);
+    expect(fetchAllSpy).toHaveBeenCalledWith({"after": undefined, "limit": limit, "sorting": "hot", "timeframe": timeframe});
   });
 });

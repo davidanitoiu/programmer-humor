@@ -13,7 +13,18 @@ export enum Timeframe {
   All = 'all',
 }
 
+export enum Sorting {
+  Hot = 'hot',
+  Best = 'best',
+  New = 'new',
+  Top = 'top',
+  Rising = 'rising',
+  Controversial = 'controversial',
+}
+
 export class RedditPostDto {
+  id: string;
+  name: string;
   url: string;
   sourceUrl: string;
   thumbnail: string;
@@ -23,4 +34,6 @@ export class RedditPostDto {
   permalink: string;
   source: string;
   posted: Date;
+  after: string;
 }
+

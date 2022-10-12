@@ -47,10 +47,10 @@ describe('RedditService', () => {
     const timeframe = Timeframe.Today;
     const limit = 5;
     
-    service.fetchAllSubredditPosts(timeframe, limit);
+    service.fetchAllSubredditPosts({timeframe, limit});
 
     expect(serviceSpy).toHaveBeenCalled();
-    expect(serviceSpy).toHaveBeenCalledWith(timeframe, limit);
+    expect(serviceSpy).toHaveBeenCalledWith({timeframe, limit});
   });
 
   it('should return an array of reddit posts with a subreddit', async () => {
@@ -61,9 +61,9 @@ describe('RedditService', () => {
     const timeframe = Timeframe.Today;
     const limit = 5;
     
-    service.fetchSubredditPosts(subreddit, timeframe, limit);
+    service.fetchSubredditPosts({subreddit, timeframe, limit});
 
     expect(serviceSpy).toHaveBeenCalled();
-    expect(serviceSpy).toHaveBeenCalledWith(subreddit, timeframe, limit);
+    expect(serviceSpy).toHaveBeenCalledWith({subreddit, timeframe, limit});
   });
 });

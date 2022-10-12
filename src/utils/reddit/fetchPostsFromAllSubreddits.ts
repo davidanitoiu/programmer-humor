@@ -1,19 +1,31 @@
-import { Timeframe, RedditPostDto, Subreddit } from "../../reddit/reddit.dto";
-import { getListOfSubreddits, fetchPosts } from "./helpers";
+import { sortBy } from 'lodash';
+import { RedditPostDto, Timeframe } from "../../reddit/reddit.dto";
+import { fetchPosts, getListOfSubreddits } from "./helpers";
 
-export function fetchPostsFromAllSubreddits(
-    timeframe: Timeframe,
-    limit: number,
-): Promise<RedditPostDto[]> {
+interface FetchAllArgs {
+    timeframe: Timeframe;
+    limit: number;
+    sorting?: string;
+    after?: string;
+}
+
+export function fetchPostsFromAllSubreddits(args: FetchAllArgs): Promise<RedditPostDto[]> {
     const subreddits = getListOfSubreddits(); // skip the entry 'All', it would fetch from the whole of reddit
     const promises = subreddits.map((subredditKey) =>
-        fetchPosts(subredditKey as Subreddit, timeframe, limit)
-    );
-    return Promise.all(promises).then((posts) =>
-        posts.reduce((acc, curr) => {
-            return acc.concat(curr);
+        fetchPosts({
+            subreddit: subredditKey,
+            ...args
         })
-        .sort((a, b) => b.upvotes - a.upvotes)
-        .slice(0, limit)
     );
+    return Promise.all(promises).then((posts) => {
+        const mergedPosts = posts.reduce((acc, curr) => {
+            return acc.concat(curr);
+        }, []);
+
+        const sortedMergedPosts = sortBy(mergedPosts, "upvotes").reverse();
+
+        console.dir(sortedMergedPosts);
+
+        return sortedMergedPosts.slice(0, args?.limit);
+    });
 }

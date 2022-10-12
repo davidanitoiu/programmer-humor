@@ -2,7 +2,7 @@ import { INestApplication } from "@nestjs/common";
 import { TestingModule, Test } from "@nestjs/testing";
 import { AppController } from "../app.controller";
 import { AppService } from "../app.service";
-import metadata from "@/utils/metadata";
+import metadata from "../../utils/metadata";
 import * as request from 'supertest';
 
 describe('AppController', () => {

@@ -16,36 +16,46 @@ describe('Reddit helper utils', () => {
         const getListOfSubredditsSpy = jest.spyOn(helpers, 'getListOfSubreddits');
         const fetchPostsSpy = jest.spyOn(helpers, 'fetchPosts').mockImplementation(() => Promise.resolve([]));
 
-        await fetchPostsFromAllSubreddits(timeframe, limit);
+        await fetchPostsFromAllSubreddits({ timeframe, limit });
 
         expect(getListOfSubredditsSpy).toHaveBeenCalledWith();
 
-        expect(fetchPostsSpy).toHaveBeenCalledWith(Subreddit.CodingHumor, timeframe, limit);
-        expect(fetchPostsSpy).toHaveBeenCalledWith(Subreddit.ProgrammerDadJokes, timeframe, limit);
-        expect(fetchPostsSpy).toHaveBeenCalledWith(Subreddit.ProgrammerHumor, timeframe, limit);
-        expect(fetchPostsSpy).toHaveBeenCalledWith(Subreddit.ProgrammingJokes, timeframe, limit);
+        //expect(fetchPostsSpy).toHaveBeenCalledWith(Subreddit.CodingHumor, timeframe, limit);
+        expect(fetchPostsSpy).toHaveBeenCalledWith({ subreddit: Subreddit.CodingHumor, timeframe, limit });
+        //expect(fetchPostsSpy).toHaveBeenCalledWith(Subreddit.ProgrammerDadJokes, timeframe, limit);
+        expect(fetchPostsSpy).toHaveBeenCalledWith({ subreddit: Subreddit.ProgrammerDadJokes, timeframe, limit });
+        //expect(fetchPostsSpy).toHaveBeenCalledWith(Subreddit.ProgrammerHumor, timeframe, limit);
+        expect(fetchPostsSpy).toHaveBeenCalledWith({ subreddit: Subreddit.ProgrammerHumor, timeframe, limit });
+        //expect(fetchPostsSpy).toHaveBeenCalledWith(Subreddit.ProgrammingJokes, timeframe, limit);
+        expect(fetchPostsSpy).toHaveBeenCalledWith({ subreddit: Subreddit.ProgrammingJokes, timeframe, limit });
     });
 
     it('should use fetchPosts to make an axios call with the correct parameters', async () => {
         const subreddit = Subreddit.ProgrammerHumor;
         const timeframe = Timeframe.Today;
         const limit = 5;
-        const url = `https://www.reddit.com/r/${subreddit}/top.json?t=${timeframe}&limit=${limit}`;
-
-/*
-{
-            url: 'https://reddit.com' + child.data.permalink,
-            sourceUrl: 'https://reddit.com/r/' + child.data.subreddit,
-            thumbnail: child.data.thumbnail,
-            media: child.data.url,
-            upvotes: child.data.score,
-            title: child.data.title,
-            permalink: child.data.permalink,
-            source: '/r/' + child.data.subreddit,
-            posted: new Date(child.data.created_utc * 1000),
+        const after = 't3_y1vlhz'
+        const url = `https://www.reddit.com/r/${subreddit}/top.json`;
+        const params = {
+            t: timeframe,
+            limit,
+            after
         }
 
-*/
+        /*
+        {
+                    url: 'https://reddit.com' + child.data.permalink,
+                    sourceUrl: 'https://reddit.com/r/' + child.data.subreddit,
+                    thumbnail: child.data.thumbnail,
+                    media: child.data.url,
+                    upvotes: child.data.score,
+                    title: child.data.title,
+                    permalink: child.data.permalink,
+                    source: '/r/' + child.data.subreddit,
+                    posted: new Date(child.data.created_utc * 1000),
+                }
+        
+        */
 
         const axiosSpy = jest.spyOn(axios, 'get').mockImplementation(() => Promise.resolve({
             data: {
@@ -67,9 +77,9 @@ describe('Reddit helper utils', () => {
             }
         }));
 
-        await fetchPosts(subreddit, timeframe, limit);
+        await fetchPosts({ subreddit, timeframe, limit, after });
 
         expect(axiosSpy).toHaveBeenCalled();
-        expect(axiosSpy).toHaveBeenCalledWith(url);
+        expect(axiosSpy).toHaveBeenCalledWith(url, { params });
     })
 })
