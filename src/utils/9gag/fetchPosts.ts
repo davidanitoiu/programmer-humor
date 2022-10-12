@@ -1,9 +1,9 @@
 import * as cloudscraper from "cloudscraper";
 import { NineGagPostDto } from "../../9gag/9gag.dto";
-import { isDevTag } from "./isDevTag";
+import { hasTitleDevTag, isDevTag, validTags } from "./helpers";
 
 export async function fetchPosts({ sorting = 'hot', after = null }): Promise<NineGagPostDto[]> {
-    const query = `query=programming+coding+programmer`;
+    const query = `query=${validTags.join('+')}`;
     const sortingString = `type%2F${sorting}`
     const next = after ? `&c=${after}` : '';
     const currentIndex: number = after ?? 0;
@@ -23,7 +23,7 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
             .filter((post) => {
                 // remove posts that don't contain tags related to programming
                 // check post.tags, which is an array of objects with url and key properties
-                return post.tags.some(isDevTag);
+                return post.tags.some(isDevTag) || hasTitleDevTag(post.title);
             })
             .filter((post) => {
                 // remove nsfw posts
@@ -32,7 +32,7 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
             .map((post, i) => {
                 //const sourceTag = post.tags[random(0, post.tags.length - 1)].key;
                 // search the post tags for a tag related to coding or programming or programmer and use that as any of those as the source tag
-                const sourceTag = post.tags.find(isDevTag);
+                const sourceTag = post.tags.find(isDevTag) ?? post.tags[0];
 
                 const cursorPosition = Number(currentIndex) + i;
 
