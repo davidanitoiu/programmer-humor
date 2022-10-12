@@ -26,7 +26,7 @@ export async function fetchPosts(args:FetchArgs): Promise<RedditPostDto[]> {
         );
 
         const posts = reject(data.data.children, entry => entry.data.stickied || entry.data.link_flair_text === 'Mod Post' || has(entry.data, 'crosspost_parent_list') || entry.data.over_18);
-        const redditPosts = posts
+        const redditPosts: RedditPostDto[] = posts
             .map((child, i) => ({
                 id: child.data.id,
                 name: child.data.name,
@@ -36,6 +36,8 @@ export async function fetchPosts(args:FetchArgs): Promise<RedditPostDto[]> {
                 media: child.data.url,
                 upvotes: child.data.score,
                 title: child.data.title,
+                content: child.data.selftext,
+                content_html: child.data.selftext_html,
                 permalink: child.data.permalink,
                 source: '/r/' + child.data.subreddit,
                 posted: new Date(child.data.created_utc * 1000),

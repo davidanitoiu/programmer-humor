@@ -22,10 +22,8 @@ export function fetchPostsFromAllSubreddits(args: FetchAllArgs): Promise<RedditP
             return acc.concat(curr);
         }, []);
 
-        const sortedMergedPosts = sortBy(mergedPosts, "upvotes").reverse();
+        const sortedMergedPosts: RedditPostDto[] = sortBy(mergedPosts, "upvotes").reverse();
 
-        console.dir(sortedMergedPosts);
-
-        return sortedMergedPosts.slice(0, args?.limit);
+        return (args && args.limit) ? sortedMergedPosts.slice(0, args.limit) : sortedMergedPosts;
     });
 }

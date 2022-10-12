@@ -28,6 +28,8 @@ export class RedditPostDto {
   url: string;
   sourceUrl: string;
   thumbnail: string;
+  content: string;
+  content_html: string;
   media: string;
   upvotes: number;
   title: string;
