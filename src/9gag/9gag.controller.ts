@@ -16,6 +16,16 @@ export class NineGagController {
         // after is an optional parameter that is used to fetch the next page of posts
         @Query('after') after?: string
     ) {
-        return await this.nineGagService.fetchAllProgrammingPosts({ sorting, after });
+        let posts = []
+        
+        posts = await this.nineGagService.fetchAllProgrammingPosts({ sorting, after });
+
+        // sometimes the first response is empty, so we fetch again
+        if (!(posts?.length)) {
+            console.log('9gag posts were empty, fetching again');
+            posts = await this.nineGagService.fetchAllProgrammingPosts({ sorting, after });;
+        }
+
+        return posts;
     }
 }
