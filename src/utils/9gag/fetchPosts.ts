@@ -12,10 +12,9 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
         const url = `https://9gag.com/v1/search-posts?${query}${next}%2F${sortingString}`;
 
         //const url = `https://9gag.com/v1/tag-posts/tag/${tag}/type/${sort}${next}`
-        const response = await cloudscraper({
-            url: url,
-            method: 'GET',
-        });
+        // have typescript ignore the next line
+        // @ts-ignore
+        const response = await cloudscraper.get(url);
 
         const responseJson = JSON.parse(response);
 
