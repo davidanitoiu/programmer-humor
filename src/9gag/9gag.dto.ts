@@ -8,15 +8,18 @@ export enum NineGagSorting {
 }
 
 export class NineGagPostDto {
-    title: string;
     id: string;
     name: string;
     url: string;
-    upvotes: number;
-    nsfw: boolean;
-    media: string;
-    selftext: string;
-    selftext_html: string;
+    sourceUrl: string;
     thumbnail: string;
+    content: string;
+    content_html: string;
+    media: string;
+    upvotes: number;
+    title: string;
+    permalink: string;
+    source: string;
+    posted: Date;
     after: string;
 }
