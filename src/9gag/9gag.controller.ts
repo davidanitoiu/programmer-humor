@@ -37,7 +37,9 @@ export class NineGagController {
         let totalPosts = posts.length;
         while (posts.length === 0 || totalPosts < 10) {
             const lastPost = last(posts);
-            const newPosts = await this.nineGagService.fetchAllProgrammingPosts({ sorting, after: lastPost?.after ?? after });
+
+            const lastPostAfter = lastPost?.after.split('=')[1];
+            const newPosts = await this.nineGagService.fetchAllProgrammingPosts({ sorting, after: lastPostAfter ?? after });
             totalPosts += newPosts.length;
             posts = posts.concat(newPosts);
         }
