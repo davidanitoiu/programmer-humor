@@ -13,14 +13,29 @@ export enum Timeframe {
   All = 'all',
 }
 
+export enum Sorting {
+  Hot = 'hot',
+  Best = 'best',
+  New = 'new',
+  Top = 'top',
+  Rising = 'rising',
+  Controversial = 'controversial',
+}
+
 export class RedditPostDto {
+  id: string;
+  name: string;
   url: string;
   sourceUrl: string;
   thumbnail: string;
+  content: string;
+  content_html: string;
   media: string;
   upvotes: number;
   title: string;
   permalink: string;
   source: string;
   posted: Date;
+  after: string;
 }
+
