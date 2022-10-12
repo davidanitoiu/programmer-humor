@@ -13,7 +13,7 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
 
         //const url = `https://9gag.com/v1/tag-posts/tag/${tag}/type/${sort}${next}`
         const response = await cloudscraper({
-            uri: url,
+            url: url,
             method: 'GET',
         });
 
