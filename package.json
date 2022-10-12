@@ -26,7 +26,9 @@
     "@nestjs/platform-express": "^9.0.11",
     "@nestjs/swagger": "^6.0.5",
     "axios": "^0.27.2",
+    "cloudscraper": "^4.6.0",
     "reflect-metadata": "^0.1.13",
+    "request": "^2.88.2",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.6"
   },
