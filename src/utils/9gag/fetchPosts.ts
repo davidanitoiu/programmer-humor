@@ -2,10 +2,6 @@ import * as cloudscraper from "cloudscraper";
 import { NineGagPostDto } from "../../9gag/9gag.dto";
 import { isDevTag } from "./isDevTag";
 
-interface NineGagResponse {
-    data: { posts: any[] }
-}
-
 export async function fetchPosts({ sorting = 'hot', after = null }): Promise<NineGagPostDto[]> {
     const query = `query=programming+coding+programmer`;
     const sortingString = `type%2F${sorting}`
@@ -18,6 +14,7 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
         //const url = `https://9gag.com/v1/tag-posts/tag/${tag}/type/${sort}${next}`
         const response = await cloudscraper({
             uri: url,
+            method: 'GET',
         });
 
         const responseJson = JSON.parse(response);
@@ -28,6 +25,10 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
                 // remove posts that don't contain tags related to programming
                 // check post.tags, which is an array of objects with url and key properties
                 return post.tags.some(isDevTag);
+            })
+            .filter((post) => {
+                // remove nsfw posts
+                return !post.nsfw;
             })
             .map((post, i) => {
                 //const sourceTag = post.tags[random(0, post.tags.length - 1)].key;
@@ -43,9 +44,8 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
                     title: post.title,
                     media: post.images.image700.url,
                     upvotes: post.upVoteCount,
-                    nsfw: post.nsfw,
-                    selftext: post.description,
-                    selftext_html: null,
+                    content: post.description,
+                    content_html: null,
                     thumbnail: post.images.imageFbThumbnail.url,
                     source: `${sourceTag.url}`,
                     sourceUrl: `https://9gag.com${sourceTag.url}`,
