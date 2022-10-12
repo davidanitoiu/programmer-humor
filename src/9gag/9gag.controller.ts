@@ -1,6 +1,7 @@
 import { Controller, DefaultValuePipe, Get, ParseEnumPipe, Query } from "@nestjs/common";
 import { NineGagSorting } from "./9gag.dto";
 import { NineGagService } from "./9gag.service";
+import {last} from "lodash";
 
 @Controller('api/9gag')
 export class NineGagController {
@@ -35,8 +36,8 @@ export class NineGagController {
         let posts = await this.nineGagService.fetchAllProgrammingPosts({ sorting, after });
         let totalPosts = posts.length;
         while (posts.length === 0 || totalPosts < 10) {
-            const lastPost = posts[posts.length - 1];
-            const newPosts = await this.nineGagService.fetchAllProgrammingPosts({ sorting, after: lastPost.after });
+            const lastPost = last(posts);
+            const newPosts = await this.nineGagService.fetchAllProgrammingPosts({ sorting, after: lastPost?.after ?? after });
             totalPosts += newPosts.length;
             posts = posts.concat(newPosts);
         }
