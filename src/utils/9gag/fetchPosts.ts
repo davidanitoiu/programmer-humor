@@ -6,7 +6,7 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
     const query = `query=${validTags.join('+')}`;
     const sortingString = `type%2F${sorting}`
     const next = after ? `&c=${after}` : '';
-    const currentIndex: number = after ?? 0;
+    let currentIndex: number = after ?? 0;
 
     try {
         const url = `https://9gag.com/v1/search-posts?${query}${next}%2F${sortingString}`;
@@ -23,10 +23,12 @@ export async function fetchPosts({ sorting = 'hot', after = null }): Promise<Nin
             .filter((post) => {
                 // remove posts that don't contain tags related to programming
                 // check post.tags, which is an array of objects with url and key properties
+                currentIndex++;
                 return post.tags.some(isDevTag) || hasTitleDevTag(post.title);
             })
             .filter((post) => {
                 // remove nsfw posts
+                currentIndex++;
                 return !post.nsfw;
             })
             .map((post, i) => {
